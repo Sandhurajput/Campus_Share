@@ -112,7 +112,7 @@ function App() {
   return (
     <>
       <Router>
-        <Header user={user} onLogout={handleLogout} />
+        <Header />
         <main className="min-h-[80vh]">
           <Routes>
             <Route path="/" element={<Home />} />
@@ -120,7 +120,7 @@ function App() {
             <Route path="/post" element={<PostItem />} />
             <Route path="/request" element={<RequestItem />} />
             <Route path="/chat" element={<Chat />} />
-            <Route path="/profile" element={<Profile user={user} />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/notifications" element={<Notifications />} />
           </Routes>
         </main>
