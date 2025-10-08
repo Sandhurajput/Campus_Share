@@ -1,9 +1,17 @@
-
 import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from './firebaseConfig';
 import LoginForm from './components/LoginForm';
 import SignupForm from './components/SignupForm';
+import Header from "./components/Header";
+import Home from "./pages/home";
+import BrowseItems from "./pages/BrowseItem";
+import PostItem from "./pages/PostItem";
+import RequestItem from "./pages/RequestItem";
+import Chat from "./pages/Chat";
+import Profile from "./pages/Profile";
+import Notifications from "./pages/Notification";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -20,32 +28,29 @@ function App() {
     return () => unsubscribe(); 
   }, []);
 
-
   const saveUserToFirestore = async () => {
-  if (!user) return;
-  try {
-    const token = await user.getIdToken();
-    await fetch("http://localhost:5000/api/save-user-firestore", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
-      },
-      body: JSON.stringify({ email: user.email, uid: user.uid }),
-    });
-    console.log("User data saved to Firestore!");
-  } catch (error) {
-    console.error("Error saving user to Firestore:", error.message);
-  }
-};
+    if (!user) return;
+    try {
+      const token = await user.getIdToken();
+      await fetch("http://localhost:5000/api/save-user-firestore", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify({ email: user.email, uid: user.uid }),
+      });
+      console.log("User data saved to Firestore!");
+    } catch (error) {
+      console.error("Error saving user to Firestore:", error.message);
+    }
+  };
 
-
-useEffect(() => {
-  if (user) {
-    saveUserToFirestore();
-  }
-}, [user]);
-
+  useEffect(() => {
+    if (user) {
+      saveUserToFirestore();
+    }
+  }, [user]);
 
   const handleLogout = async () => {
     try {
@@ -91,35 +96,36 @@ useEffect(() => {
     return <div>Loading authentication state...</div>;
   }
 
+  // If user is not authenticated, show login/signup forms
+  if (!user) {
+    return (
+      <div style={{ fontFamily: 'Arial, sans-serif', padding: '20px', maxWidth: '600px', margin: 'auto' }}>
+        <h1>Firebase & Custom Backend Auth</h1>
+        <p>Please log in or sign up.</p>
+        <LoginForm />
+        <SignupForm />
+      </div>
+    );
+  }
 
-  
-
+  // If user is authenticated, show the main app with routing
   return (
-    <div style={{ fontFamily: 'Arial, sans-serif', padding: '20px', maxWidth: '600px', margin: 'auto' }}>
-      <h1>Firebase & Custom Backend Auth</h1>
-
-      {user ? (
-        <div>
-          <p>Welcome, {user.email} (UID: {user.uid})!</p>
-          <button onClick={handleLogout} style={{ marginRight: '10px' }}>Logout</button>
-          <button onClick={getProtectedDataFromBackend}>Get Protected Data from Backend</button>
-
-          {protectedData && (
-            <div style={{ marginTop: '20px', border: '1px dashed #007bff', padding: '10px' }}>
-              <h3>Protected Data from Backend:</h3>
-              <pre>{JSON.stringify(protectedData, null, 2)}</pre>
-            </div>
-          )}
-          {backendError && <p style={{ color: 'red' }}>Backend Error: {backendError}</p>}
-        </div>
-      ) : (
-        <div>
-          <p>Please log in or sign up.</p>
-          <LoginForm />
-          <SignupForm />
-        </div>
-      )}
-    </div>
+    <>
+      <Router>
+        <Header user={user} onLogout={handleLogout} />
+        <main className="min-h-[80vh]">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/browse" element={<BrowseItems />} />
+            <Route path="/post" element={<PostItem />} />
+            <Route path="/request" element={<RequestItem />} />
+            <Route path="/chat" element={<Chat />} />
+            <Route path="/profile" element={<Profile user={user} />} />
+            <Route path="/notifications" element={<Notifications />} />
+          </Routes>
+        </main>
+      </Router>
+    </>
   );
 }
 
