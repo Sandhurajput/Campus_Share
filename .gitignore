@@ -12,3 +12,4 @@ logs
 # OS files
 .DS_Store
 Thumbs.db
+server/serviceAccountKey.json
