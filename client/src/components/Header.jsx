@@ -1,26 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { User, MessageSquare, Bell } from "lucide-react";
+import { auth } from "../firebaseConfig";
 import ProfilePopupContent from "./ProfilePopupContent";
 import EditProfileModal from "./EditProfileModal";
 
-const defaultUser = {
-  name: "Alex Johnson",
-  initials: "AJ",
-  location: "University Main Campus - Block B",
-  itemsShared: 12,
-  itemsBorrowed: 8,
-  rating: 4.9,
-  profileImage: "",
-};
-
-const Header = () => {
+const Header = ({ user, onLogout }) => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isProfilePopupOpen, setIsProfilePopupOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [user, setUser] = useState(defaultUser);
+  const [userProfile, setUserProfile] = useState(null);
 
   const profileRef = useRef(null);
+  const mobileProfileRef = useRef(null);
   const navigate = useNavigate();
 
   const navItems = [
@@ -32,20 +24,76 @@ const Header = () => {
     { name: <Bell className="w-6 h-6" />, path: "/notifications" },
   ];
 
-  // --- Load or Set Default User Data ---
+  // --- Load user profile data ---
   useEffect(() => {
-    const storedUser = localStorage.getItem("userProfile");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    } else {
-      localStorage.setItem("userProfile", JSON.stringify(defaultUser));
-    }
-  }, []);
+    const loadUserProfile = async () => {
+      if (user) {
+        console.log("Loading user profile for:", user.email);
+        try {
+          // Try to get user profile from backend
+          const idToken = await user.getIdToken();
+          const response = await fetch('http://localhost:5000/api/get-profile', {
+            headers: {
+              'Authorization': `Bearer ${idToken}`,
+            },
+          });
+
+          if (response.ok) {
+            const profileData = await response.json();
+            console.log("Profile data loaded from backend:", profileData);
+            setUserProfile({
+              name: profileData.user?.username || user.email,
+              email: user.email,
+              initials: (profileData.user?.username || user.email).split(' ').map(n => n[0]).join('').toUpperCase(),
+              location: "University Main Campus",
+              itemsShared: profileData.user?.itemsShared || 0,
+              itemsBorrowed: profileData.user?.itemsBorrowed || 0,
+              rating: profileData.user?.rating || 5.0,
+              profileImage: user.photoURL || "",
+            });
+          } else {
+            console.log("Backend profile not found, using fallback");
+            // Fallback to basic user info
+            setUserProfile({
+              name: user.displayName || user.email.split('@')[0],
+              email: user.email,
+              initials: (user.displayName || user.email.split('@')[0]).split(' ').map(n => n[0]).join('').toUpperCase(),
+              location: "University Main Campus",
+              itemsShared: 0,
+              itemsBorrowed: 0,
+              rating: 5.0,
+              profileImage: user.photoURL || "",
+            });
+          }
+        } catch (error) {
+          console.error('Error loading user profile:', error);
+          // Fallback profile
+          setUserProfile({
+            name: user.displayName || user.email.split('@')[0],
+            email: user.email,
+            initials: (user.displayName || user.email.split('@')[0]).split(' ').map(n => n[0]).join('').toUpperCase(),
+            location: "University Main Campus",
+            itemsShared: 0,
+            itemsBorrowed: 0,
+            rating: 5.0,
+            profileImage: user.photoURL || "",
+          });
+        }
+      } else {
+        console.log("No user found, clearing profile");
+        setUserProfile(null);
+      }
+    };
+
+    loadUserProfile();
+  }, [user]);
 
   // --- Close popup on outside click ---
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (isProfilePopupOpen && profileRef.current && !profileRef.current.contains(e.target)) {
+      if (isProfilePopupOpen && 
+          profileRef.current && !profileRef.current.contains(e.target) &&
+          mobileProfileRef.current && !mobileProfileRef.current.contains(e.target)) {
         setIsProfilePopupOpen(false);
       }
     };
@@ -97,12 +145,22 @@ const Header = () => {
               <User className="w-6 h-6" />
             </button>
 
-            {isProfilePopupOpen && (
+            {isProfilePopupOpen && (userProfile || user) && (
               <ProfilePopupContent
-                user={user}
+                user={userProfile || {
+                  name: user.displayName || user.email.split('@')[0],
+                  email: user.email,
+                  initials: (user.displayName || user.email.split('@')[0]).split(' ').map(n => n[0]).join('').toUpperCase(),
+                  location: "University Main Campus",
+                  itemsShared: 0,
+                  itemsBorrowed: 0,
+                  rating: 5.0,
+                  profileImage: user.photoURL || "",
+                }}
                 handleClose={() => setIsProfilePopupOpen(false)}
                 navigate={navigate}
                 openEditModal={openEditModal}
+                onLogout={onLogout}
               />
             )}
           </div>
@@ -111,7 +169,7 @@ const Header = () => {
         {/* Mobile Controls */}
         <div className="md:hidden flex items-center space-x-2">
           {/* Mobile Profile Button */}
-          <div className="relative" ref={profileRef}>
+          <div className="relative" ref={mobileProfileRef}>
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -126,12 +184,22 @@ const Header = () => {
             >
               <User className="w-6 h-6" />
             </button>
-            {isProfilePopupOpen && (
+            {isProfilePopupOpen && (userProfile || user) && (
               <ProfilePopupContent
-                user={user}
+                user={userProfile || {
+                  name: user.displayName || user.email.split('@')[0],
+                  email: user.email,
+                  initials: (user.displayName || user.email.split('@')[0]).split(' ').map(n => n[0]).join('').toUpperCase(),
+                  location: "University Main Campus",
+                  itemsShared: 0,
+                  itemsBorrowed: 0,
+                  rating: 5.0,
+                  profileImage: user.photoURL || "",
+                }}
                 handleClose={() => setIsProfilePopupOpen(false)}
                 navigate={navigate}
                 openEditModal={openEditModal}
+                onLogout={onLogout}
               />
             )}
           </div>
@@ -182,8 +250,21 @@ const Header = () => {
       )}
 
       {/* Edit Profile Modal */}
-      {isEditModalOpen && (
-        <EditProfileModal user={user} setUser={setUser} closeModal={closeEditModal} />
+      {isEditModalOpen && (userProfile || user) && (
+        <EditProfileModal 
+          user={userProfile || {
+            name: user.displayName || user.email.split('@')[0],
+            email: user.email,
+            initials: (user.displayName || user.email.split('@')[0]).split(' ').map(n => n[0]).join('').toUpperCase(),
+            location: "University Main Campus",
+            itemsShared: 0,
+            itemsBorrowed: 0,
+            rating: 5.0,
+            profileImage: user.photoURL || "",
+          }} 
+          setUser={setUserProfile} 
+          closeModal={closeEditModal} 
+        />
       )}
     </header>
   );

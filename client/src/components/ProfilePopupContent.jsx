@@ -1,10 +1,17 @@
 import React from "react";
 import { Package, BookOpen, Star, LogOut, Edit2, MapPin } from "lucide-react";
 
-const ProfilePopupContent = ({ user, handleClose, navigate, openEditModal }) => {
+const ProfilePopupContent = ({ user, handleClose, navigate, openEditModal, onLogout }) => {
   const handleNavigation = (path) => {
     navigate(path);
     handleClose();
+  };
+
+  const handleLogout = () => {
+    handleClose();
+    if (onLogout) {
+      onLogout();
+    }
   };
 
   return (
@@ -75,7 +82,7 @@ const ProfilePopupContent = ({ user, handleClose, navigate, openEditModal }) => 
 
       <div className="p-4 pt-0">
         <button
-          onClick={() => handleNavigation("/logout")}
+          onClick={handleLogout}
           className="w-full inline-flex items-center justify-center px-4 py-2 text-sm font-semibold text-red-600 bg-red-100 rounded-lg hover:bg-red-200 transition-colors shadow-sm"
         >
           <LogOut className="w-4 h-4 mr-2" />
