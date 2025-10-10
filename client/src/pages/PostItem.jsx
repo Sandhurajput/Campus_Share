@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Upload, X, ArrowUpCircle } from "lucide-react";
 
-const shareCategories = ["Books", "Electronics", "Clothing", "Sports", "Stationery", "Other"];
+const shareCategories = ["Books", "Footwear","Accessories","Jewelry","Beauty Product", "Electronics", "Clothing", "Sports", "Stationery", "Other"];
 const conditions = ["Like New", "Good", "Fair", "Worn"];
 const MAX_IMAGES = 5;
 

@@ -16,9 +16,9 @@ const CURRENT_USER = {
     username: MOCK_USER_USERNAME
 };
 
-const categories = ['All', 'Books', 'Electronics', 'Clothing', 'Sports', 'Stationery'];
+const categories = ['All','Footwear', 'Accessories', 'Books', 'Electronics', 'Clothing', 'Sports', 'Stationery'];
 const categoryIcons = {
-    'All': Layers, 'Books': BookOpen, 'Electronics': Cpu, 'Clothing': Shirt, 'Sports': GripHorizontal, 'Stationery': PenTool
+    'All': Layers, 'Footwear': GripHorizontal, 'Accessories': PenTool, 'Books': BookOpen, 'Electronics': Cpu, 'Clothing': Shirt, 'Sports': GripHorizontal, 'Stationery': PenTool
 };
 
 const formatDate = (date) => {
@@ -31,98 +31,137 @@ const formatDate = (date) => {
 };
 
 const initialItemsData = [
-    { id: 1, name: "Introduction to Algorithms", category: "Books", status: "Available", reservedUntil: null,
+    { id: 1, name: "Women Shoes", category: "Footwear", status: "Available", reservedUntil: null,
       images: [
-        "https://placehold.co/400x250/2563EB/ffffff?text=Algorithm+Book+Front",
-        "https://placehold.co/400x250/1E40AF/ffffff?text=Algorithm+Book+Back"
-      ], detail: "A classic text for computer science students.",
+        "https://i.pinimg.com/1200x/70/8a/48/708a48d8ebc8392f4d838c7aaf9b3717.jpg",
+        "https://i.pinimg.com/736x/93/79/41/9379419ff216fd774974f59031063007.jpg",
+        "https://i.pinimg.com/736x/cc/c5/4c/ccc54c7c6db151f95cc1c43f833bbd05.jpg",
+        
+      ], detail: "omen's Fashion Versatile Bow Slip-On Low Heel Flat Work Shoes",
       owner: "Jane Doe", ownerUsername: "@janedoe", condition: "Good", rating: 4.8, availableUntil: "2025-11-20", ownerId: "owner_jane_doe" },
     
-    { id: 2, name: "MacBook Pro Charger", category: "Electronics", status: "Available", reservedUntil: null,
+    { id: 2, name: "Tops", category:"Clothing", status: "Available", reservedUntil: null,
       images: [
-        "https://placehold.co/400x250/059669/ffffff?text=Power+Adapter+Main"
-      ], detail: "Original 87W USB-C power adapter.", 
+        "https://i.pinimg.com/736x/32/af/5c/32af5ce784f4446c8bd8ec7237111ac5.jpg",
+        "https://i.pinimg.com/1200x/18/41/30/18413014dc432d462c8d98e5dfaa4087.jpg",
+        "https://i.pinimg.com/736x/dd/87/46/dd87467a89e2b7cfdbf10be4183ca592.jpg",
+        "https://i.pinimg.com/1200x/08/8b/fa/088bfa1e04db09672aa6337bcfac5db7.jpg",
+        "https://i.pinimg.com/736x/10/9d/a0/109da0ff82c8267a9457cc1481d806d7.jpg"
+      ], detail: "Corset, Cropped, Body's & T-Shirts ", 
       owner: "Alex Smith", ownerUsername: "@asmith", condition: "New", rating: 4.5, availableUntil: "2025-12-15", ownerId: "owner_alex_smith" },
       
     { id: 3, name: "High-Quality Soccer Ball", category: "Sports", status: "Unavailable", reservedUntil: "2025-10-10", 
       images: [
-        "https://placehold.co/400x250/F59E0B/ffffff?text=Soccer+Ball",
-        "https://placehold.co/400x250/D97706/ffffff?text=Ball+Detail"
+        "https://i.pinimg.com/736x/d3/07/93/d3079367ec7e732414d77a30e1368962.jpg"
       ], detail: "Size 5, official match ball.",
       owner: "Priya Sharma", ownerUsername: "@priya_s", condition: "Fair", rating: 4.2, availableUntil: "2025-10-05", ownerId: "owner_priya_sharma" },
 
     { id: 4, name: "Noise-Cancelling Headphones", category: "Electronics", status: "Reserved", reservedUntil: "2025-11-01",
       images: [
-        "https://placehold.co/400x250/7C3AED/ffffff?text=Headphones+View",
-        "https://placehold.co/400x250/5B21B6/ffffff?text=Headphones+Case",
-        "https://placehold.co/400x250/7C3AED/ffffff?text=Headphones+Detail"
+        "https://i.pinimg.com/736x/b3/3f/bf/b33fbf9e2a8d77d357e92f8857b482c2.jpg",
+        "https://i.pinimg.com/1200x/14/5b/28/145b284da24a377309ce4a44e173c668.jpg",
+        "https://i.pinimg.com/1200x/89/df/00/89df005c94a24ee8e110b6bed9e820a8.jpg"
       ], detail: "Sony WH-1000XM4, for study focus.",
       owner: "Rajesh Kumar", ownerUsername: "@rajesh_k", condition: "Excellent", rating: 4.9, availableUntil: "2025-12-30", ownerId: "owner_rajesh_kumar" },
 
-    { id: 5, name: "Tailwind CSS Handbook", category: "Books", status: "Available", reservedUntil: null,
+    { id: 5, name: "Book", category: "Books", status: "Available", reservedUntil: null,
       images: [
-        "https://placehold.co/400x250/DB2777/ffffff?text=CSS+Book+Cover"
-      ], detail: "A comprehensive guide to utility-first CSS.", 
+        "https://orangeava.com/cdn/shop/files/Product_Cover_3D_8b420498-ac34-4fa0-9a23-4907ec8d359e.jpg?v=1747720236",
+        "https://i.pinimg.com/736x/c1/4e/60/c14e6008ee676e6a327fa50a0adcb9f9.jpg",
+        "https://i.pinimg.com/736x/5a/20/5a/5a205a1b8d33e5ad412defbd4338a822.jpg",
+      ], detail: "A classic text for computer scieents.nce stud", 
       owner: MOCK_USER_NAME, ownerUsername: MOCK_USER_USERNAME, condition: "New", rating: 4.7, availableUntil: null, ownerId: CURRENT_USER_ID },
 
     { id: 9, name: "Wireless Mouse (Ergo)", category: "Electronics", status: "Available", reservedUntil: null,
       images: [ 
-        "https://placehold.co/400x250/3B82F6/ffffff?text=Ergonomic+Mouse" 
+        "https://i.pinimg.com/736x/56/76/83/56768336018a2204496ebd5576eb1e73.jpg" 
       ], detail: "Silent click, great for late night work.", 
       owner: MOCK_USER_NAME, ownerUsername: MOCK_USER_USERNAME, condition: "Excellent", rating: 4.6, availableUntil: "2026-02-01", ownerId: CURRENT_USER_ID },
 
-    { id: 10, name: "Yoga Mat and Straps", category: "Sports", status: "Reserved", reservedUntil: "2025-10-20",
+    { id: 10, name: "Water bottle", category: "Sports", status: "Reserved", reservedUntil: "2025-10-20",
       images: [
-        "https://placehold.co/400x250/EC4899/ffffff?text=Yoga+Mat",
-        "https://placehold.co/400x250/E11D48/ffffff?text=Mat+Detail",
-        "https://placehold.co/400x250/BE185D/ffffff?text=Strap"
-      ], detail: "Non-slip TPE material, dark pink.", 
+        "https://i.pinimg.com/736x/d4/09/93/d40993efba9bcda64bf3a63eb5c0adff.jpg",
+        "https://i.pinimg.com/736x/03/3e/79/033e797e5f45cd6d9958f66a06f52780.jpg",
+        "https://i.pinimg.com/736x/4b/cf/ac/4bcfac206a4156ce3a47a0e3f5b94678.jpg"
+      ], detail: "HydroFlask Water bottle.", 
       owner: MOCK_USER_NAME, ownerUsername: MOCK_USER_USERNAME, condition: "Good", rating: 4.3, availableUntil: "2026-03-01", ownerId: CURRENT_USER_ID },
 
-    { id: 6, name: "Winter Jacket (Large)", category: "Clothing", status: "Available", reservedUntil: null,
+    { id: 6, name: "Secret Perfume", category: "Clothing", status: "Available", reservedUntil: null,
       images: [
-        "https://placehold.co/400x250/374151/ffffff?text=Jacket+Front",
-        "https://placehold.co/400x250/374151/ffffff?text=Jacket+Back"
-      ], detail: "Warm, waterproof jacket, good for travel.",
+        "https://i.pinimg.com/736x/86/6b/5e/866b5e24ec16d26f83630a9fb91eb5b9.jpg",
+        "https://i.pinimg.com/736x/b4/7e/bb/b47ebb148e8b1ff5b1dc1dedd8b77ed6.jpg"
+      ], detail: "Best Perfumes for Women.",
       owner: "Neha Singh", ownerUsername: "@neha_travels", condition: "Good", rating: 4.4, availableUntil: "2025-11-25", ownerId: "owner_neha_singh" },
 
-    { id: 7, name: "Mechanical Keyboard", category: "Electronics", status: "Reserved", reservedUntil: "2025-10-25",
+    { id: 7, name: "Jewelry For Women", category: "Accessories", status: "Reserved", reservedUntil: "2025-10-25",
       images: [
-        "https://placehold.co/400x250/14B8A6/ffffff?text=Keyboard+Top",
-        "https://placehold.co/400x250/0D9488/ffffff?text=Keyboard+Keys"
+        "https://i.pinimg.com/736x/78/6b/16/786b16529bdef6693ea7bd0159b7447f.jpg",
+        "https://i.pinimg.com/736x/c0/b3/2c/c0b32c0cef0bf33f3f3dea038e90653b.jpg",
+        "https://i.pinimg.com/1200x/af/ba/ba/afbabaa3e30b38ae1c5e78c32d14a747.jpg",
+        "https://i.pinimg.com/736x/a5/fe/ab/a5feabc6fab73d86c5921cbd9ecf668c.jpg",
       ], detail: "Tactile brown switches, great for coding.",
       owner: "Siddharth Jain", ownerUsername: "@sid_coder", condition: "Good", rating: 4.6, availableUntil: "2025-12-01", ownerId: "owner_siddharth_jain" },
 
     { id: 8, name: "Professional Drawing Pencils Set", category: "Stationery", status: "Available", reservedUntil: null,
       images: [
-        "https://placehold.co/400x250/EAB308/ffffff?text=Pencils+Set",
-        "https://placehold.co/400x250/EAB308/ffffff?text=Pencils+Detail"
+        "https://i.pinimg.com/736x/0e/4d/79/0e4d795e44494ad449a655e24078d5fd.jpg",
+        "https://i.pinimg.com/736x/eb/07/fc/eb07fc1dfd2a50005d4c0285919d3f30.jpg"
       ], detail: "Set of 12 graphite pencils.",
       owner: "Deepa Menon", ownerUsername: "@art_deepa", condition: "New", rating: 4.1, availableUntil: "2026-01-31", ownerId: "owner_deepa_menon" },
 
-    { id: 11, name: "Architectural Drawing Set", category: "Stationery", status: "Available", reservedUntil: null,
+    { id: 11, name: "Nail Polish", category: "Beauty Product", status: "Available", reservedUntil: null,
       images: [
-        "https://placehold.co/400x250/10B981/ffffff?text=Set+View+1",
-        "https://placehold.co/400x250/059669/ffffff?text=Set+View+2",
-        "https://placehold.co/400x250/047857/ffffff?text=Set+View+3",
-        "https://placehold.co/400x250/065F46/ffffff?text=Set+View+4",
-        "https://placehold.co/400x250/022C22/ffffff?text=Set+View+5"
-      ], detail: "Protractor, ruler, compass, and stencils.",
+        "https://i.pinimg.com/736x/1d/98/d1/1d98d19179a256683d83afcbc7855f0d.jpg",
+        "https://i.pinimg.com/736x/6f/27/83/6f2783a60028a4d241b2d6872462542a.jpg",
+        "https://i.pinimg.com/736x/3b/ec/23/3bec23500423916e1c966e2834bbad82.jpg",
+        "https://i.pinimg.com/736x/31/21/74/3121743a9a353263888116dc6af66313.jpg",
+        "https://i.pinimg.com/736x/f7/f6/7e/f7f67edc5c7cb2c539da0f5eca972368.jpg"
+      ], detail: "Sleek, glossy slate beautifull nails for a cool and sophisticated manicure.",
       owner: "Kriti Desai", ownerUsername: "@kriti_draws", condition: "New", rating: 5.0, availableUntil: "2026-06-01", ownerId: "owner_kriti_desai" },
 
-    { id: 12, name: "Formal Black Trousers", category: "Clothing", status: "Available", reservedUntil: null,
+    { id: 12, name: "Formal Beautiful Watch", category: "Accessories", status: "Available", reservedUntil: null,
       images: [
-        "https://placehold.co/400x250/1F2937/ffffff?text=Trousers+Front",
-        "https://placehold.co/400x250/4B5563/ffffff?text=Trousers+Fabric"
-      ], detail: "Size 32, dark black, slim fit.",
+        "https://i.pinimg.com/736x/c4/e2/65/c4e265b7dc323bfc3edc176c80443baf.jpg",
+        "https://i.pinimg.com/736x/8e/3b/75/8e3b75fedd10b829bcf606b27e95f3ff.jpg",
+        "https://i.pinimg.com/1200x/c0/ec/9f/c0ec9ffa26bba76360fc201f0d473fb7.jpg",
+      ], detail: "Best Women Watch",
       owner: "Veer Singh", ownerUsername: "@veer_style", condition: "Good", rating: 3.9, availableUntil: "2025-11-01", ownerId: "owner_veer_singh" },
 
-    { id: 13, name: "The Alchemist (Novel)", category: "Books", status: "Reserved", reservedUntil: "2025-11-15",
+    { id: 13, name: "Cashmere Scarf", category: "Clothing", status: "Reserved", reservedUntil: "2025-11-15",
       images: [
-        "https://placehold.co/400x250/9D174D/ffffff?text=Alchemist+Book"
-      ], detail: "Famous philosophical novel by Paulo Coelho.",
+        "https://i.pinimg.com/1200x/ed/0c/81/ed0c81398ad1973b30f390d56606ebc8.jpg",
+        "https://img.staticdj.com/7263606b05f525c1ebf35c64176cc451_1920x.jpeg",
+        "https://i.pinimg.com/1200x/8e/38/e9/8e38e90b87fb985e626915382e8c0822.jpg",
+      ], detail: "High Quality Jersey Scarf Shawl .",
+      owner: "Sanya Roy", ownerUsername: "@sanya_reader", condition: "Fair", rating: 4.5, availableUntil: "2025-12-01", ownerId: "owner_sanya_roy" },
+
+    { id: 13, name: "Earring", category: "Accessories", status: "Reserved", reservedUntil: "2025-11-15",
+     images: [
+        "https://i.pinimg.com/1200x/d2/2a/0f/d22a0f1470d71c8d163449dbafd36edf.jpg",
+        "https://i.pinimg.com/1200x/cb/cb/c9/cbcbc968acae3f71c3a55bd4c9348725.jpg",
+        "https://i.pinimg.com/736x/5b/fa/20/5bfa20c98e28f9c4f3c0553b72afe0d1.jpg",
+      ], detail: "Earring for women.",
+      owner: "Sanya Roy", ownerUsername: "@sanya_reader", condition: "Fair", rating: 4.5, availableUntil: "2025-12-01", ownerId: "owner_sanya_roy" },
+      
+
+    { id: 13, name: "Clips", category: "Accessories", status: "Reserved", reservedUntil: "2025-11-15",
+     images: [
+        "https://i.pinimg.com/1200x/c1/c8/e5/c1c8e58176f5fa160f9990764d4ea8fa.jpg",
+        "https://i.pinimg.com/736x/69/69/9c/69699c7c66c9188745a751369ceda7a8.jpg",
+
+      ], detail: "Cute flower claw clips",
+      owner: "Sanya Roy", ownerUsername: "@sanya_reader", condition: "Fair", rating: 4.5, availableUntil: "2025-12-01", ownerId: "owner_sanya_roy" },
+
+
+    { id: 13, name: "Women Shoes", category: "Footwear", status: "Unavailable", reservedUntil: "2025-11-15",
+     images: [
+        "https://i.pinimg.com/736x/08/80/75/088075ea0b122ff831d4cd1473d731c0.jpg",
+        "https://i.pinimg.com/1200x/e4/fb/9b/e4fb9b5bab3db50f5a8e4551f9ef17e8.jpg",
+        "https://i.pinimg.com/1200x/63/71/14/6371143733277672026a7c9597041745.jpg",
+      ], detail: "Women Footwear for work and party",
       owner: "Sanya Roy", ownerUsername: "@sanya_reader", condition: "Fair", rating: 4.5, availableUntil: "2025-12-01", ownerId: "owner_sanya_roy" },
 ];
+
 
 const SimpleCalendar = ({ selectedDate, setSelectedDate }) => {
     const today = useMemo(() => new Date(), []);

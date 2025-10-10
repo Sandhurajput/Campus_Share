@@ -8,6 +8,18 @@ import RequestItem from "./pages/RequestItem";
 import Chat from "./pages/Chat";
 import Profile from "./pages/Profile";
 import Notifications from "./pages/Notification";
+import Footer from "./components/Footer";
+
+import About from "./footer/About";
+import Work from "./footer/Work";
+import Trust from "./footer/Trust";
+import Community from "./footer/Community";
+import Terms from "./footer/Terms";
+import Privacy from "./footer/Privacy";
+import Help from "./footer/Help";
+import Guidelines from "./footer/Guidelines";
+
+
 function App() {
 
   return (
@@ -23,9 +35,21 @@ function App() {
           <Route path="/chat" element={<Chat />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/notifications" element={<Notifications />} />
+           <Route path="/about" element={<About />} />
+          <Route path="/work" element={<Work />} />
+          <Route path="/trust" element={<Trust />} />
+          <Route path="/community" element={<Community />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/help" element={<Help />} />
+          <Route path="/guidelines" element={<Guidelines />} />
         </Routes>
+
+
       </main>
+      <Footer/>
     </Router>
+    
     </>
   )
 }
